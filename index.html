@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
       content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>Precision Automatic</title>
 
 <style>
@@ -20,26 +21,50 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at 50% 45%,#303030 0,#111 48%,#000 100%);
+  background:#000;
   font-family:Georgia,"Times New Roman",serif;
 }
 
+/* =========================
+   MATRIX BACKGROUND
+   ========================= */
+
+#matrix{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+  opacity:.28;
+}
+
+/* =========================
+   WATCH
+   ========================= */
+
 .watch{
   position:relative;
+  z-index:2;
+
   width:min(92vw,430px);
   aspect-ratio:1;
+
   padding:18px;
   border-radius:50%;
+
   background:
-    linear-gradient(145deg,
-      #ffffff 0%,
+    linear-gradient(
+      145deg,
+      #fff 0%,
       #aaa 12%,
       #444 30%,
       #111 50%,
       #aaa 70%,
       #eee 88%,
-      #555 100%);
+      #555 100%
+    );
+
   box-shadow:
     0 25px 60px #000,
     inset 0 0 0 3px #ddd,
@@ -49,8 +74,10 @@ body{
 .bezel{
   width:100%;
   height:100%;
+
   border-radius:50%;
   padding:7px;
+
   background:
     repeating-conic-gradient(
       #aaa 0deg,
@@ -62,97 +89,143 @@ body{
 
 .face{
   position:relative;
+
   width:100%;
   height:100%;
+
   border-radius:50%;
   overflow:hidden;
+
   background:
-    radial-gradient(circle at 50% 45%,
+    radial-gradient(
+      circle at 50% 45%,
       #fff 0,
       #f4f4ef 45%,
       #ddd 75%,
-      #aaa 100%);
+      #aaa 100%
+    );
+
   border:4px solid #111;
+
   box-shadow:
     inset 0 0 30px #777,
     inset 0 0 5px #fff;
 }
 
-/* subtle dial texture */
+/* Dial texture */
+
 .face:after{
   content:"";
+
   position:absolute;
   inset:0;
+
   border-radius:50%;
+
   background:
     repeating-radial-gradient(
       circle,
-      transparent 0px,
+      transparent 0,
       transparent 3px,
       rgba(0,0,0,.025) 4px
     );
+
   pointer-events:none;
 }
 
+/* =========================
+   WATCH TEXT
+   ========================= */
+
 .brand{
   position:absolute;
+
   top:18%;
   left:0;
+
   width:100%;
+
   text-align:center;
+
   font-size:24px;
   font-weight:bold;
   letter-spacing:4px;
+
   color:#111;
 }
 
 .model{
   position:absolute;
+
   top:27%;
   left:0;
+
   width:100%;
+
   text-align:center;
+
   font-size:8px;
   letter-spacing:3px;
+
   color:#222;
 }
 
+/* Crown */
+
 .crown{
   position:absolute;
+
   right:-11px;
   top:46%;
+
   width:17px;
   height:31px;
+
   border-radius:5px;
+
   background:
     repeating-linear-gradient(
       90deg,
       #777 0 2px,
       #ccc 2px 4px
     );
+
   box-shadow:0 1px 5px #000;
 }
 
-/* hour markers */
+/* =========================
+   HOUR MARKERS
+   ========================= */
+
 .marker{
   position:absolute;
+
   left:50%;
   top:50%;
+
   width:4px;
   height:45%;
+
   transform-origin:50% 100%;
+
   pointer-events:none;
 }
 
 .marker:after{
   content:"";
+
   position:absolute;
+
   top:0;
   left:-2px;
+
   width:8px;
   height:15px;
+
   border-radius:2px;
-  background:linear-gradient(#111,#555);
+
+  background:
+    linear-gradient(#111,#555);
 }
 
 .marker.big:after{
@@ -161,90 +234,154 @@ body{
   left:-2.5px;
 }
 
-/* hands */
+/* =========================
+   HANDS
+   ========================= */
+
 .hand{
   position:absolute;
+
   z-index:10;
+
   left:50%;
   top:50%;
+
   transform-origin:50% 100%;
+
   border-radius:5px 5px 2px 2px;
 }
 
 .hour{
   width:8px;
   height:25%;
+
   margin-left:-4px;
   margin-top:-25%;
-  background:linear-gradient(90deg,#111,#555,#111);
+
+  background:
+    linear-gradient(
+      90deg,
+      #111,
+      #555,
+      #111
+    );
+
   box-shadow:0 1px 2px #fff;
 }
 
 .minute{
   width:5px;
   height:36%;
+
   margin-left:-2.5px;
   margin-top:-36%;
-  background:linear-gradient(90deg,#111,#666,#111);
+
+  background:
+    linear-gradient(
+      90deg,
+      #111,
+      #666,
+      #111
+    );
 }
 
 .second{
   width:2px;
   height:41%;
+
   margin-left:-1px;
   margin-top:-41%;
-  background:#9b0000;
+
+  background:#900;
+
   border-radius:2px;
 }
 
 .second:after{
   content:"";
+
   position:absolute;
+
   bottom:-18px;
   left:-1px;
+
   width:4px;
   height:22px;
-  background:#9b0000;
+
+  background:#900;
 }
 
-/* center */
+/* Center pin */
+
 .pin{
   position:absolute;
+
   z-index:20;
+
   left:50%;
   top:50%;
+
   width:15px;
   height:15px;
+
   margin:-7.5px;
+
   border-radius:50%;
+
   background:
-    radial-gradient(circle,#eee 0 20%,#111 25% 65%,#aaa 70%);
+    radial-gradient(
+      circle,
+      #eee 0 20%,
+      #111 25% 65%,
+      #aaa 70%
+    );
 }
 
-/* date window */
+/* =========================
+   DATE
+   ========================= */
+
 .date{
   position:absolute;
+
   z-index:8;
+
   left:50%;
   top:59%;
+
   transform:translateX(-50%);
+
   min-width:38px;
+
   padding:3px 6px;
+
   text-align:center;
+
   background:#fff;
+
   border:1px solid #777;
+
   color:#111;
+
   font:bold 12px Arial,sans-serif;
+
   box-shadow:0 1px 3px #555;
 }
 
-/* bottom information */
+/* =========================
+   DIGITAL INFORMATION
+   ========================= */
+
 .info{
   position:absolute;
+
   left:0;
   bottom:11%;
+
   width:100%;
+
   text-align:center;
+
   color:#333;
 }
 
@@ -255,24 +392,40 @@ body{
 
 .status{
   margin-top:5px;
+
   font:8px Arial,sans-serif;
+
   letter-spacing:1px;
+
   opacity:.75;
 }
 
 .footer{
   position:fixed;
+
   left:0;
   bottom:8px;
+
   width:100%;
+
   text-align:center;
+
   color:#aaa;
+
   font:10px Arial,sans-serif;
+
+  z-index:5;
 }
 </style>
 </head>
 
 <body>
+
+<!-- MATRIX -->
+<canvas id="matrix"></canvas>
+
+
+<!-- WATCH -->
 
 <div class="watch">
 
@@ -282,110 +435,348 @@ body{
 
     <div class="face">
 
-      <div class="brand">PRECISION</div>
-      <div class="model">AUTOMATIC • CHRONOMETER</div>
+      <div class="brand">
+        PRECISION
+      </div>
+
+      <div class="model">
+        AUTOMATIC • CHRONOMETER
+      </div>
 
       <div id="markers"></div>
 
-      <div class="hand hour" id="hour"></div>
-      <div class="hand minute" id="minute"></div>
-      <div class="hand second" id="second"></div>
+      <div
+        class="hand hour"
+        id="hour">
+      </div>
+
+      <div
+        class="hand minute"
+        id="minute">
+      </div>
+
+      <div
+        class="hand second"
+        id="second">
+      </div>
 
       <div class="pin"></div>
 
-      <div class="date" id="date">--</div>
+      <div
+        class="date"
+        id="date">
+        --
+      </div>
 
       <div class="info">
-        <div class="time" id="digital">--:--:--</div>
-        <div class="status" id="status">
+
+        <div
+          class="time"
+          id="digital">
+          --:--:--
+        </div>
+
+        <div
+          class="status"
+          id="status">
           LOCAL CLOCK
         </div>
+
       </div>
 
     </div>
+
   </div>
+
 </div>
 
-<div class="footer" id="footer">
+
+<div
+  class="footer"
+  id="footer">
   Attempting precision time synchronization…
 </div>
 
+
 <script>
-"use strict";
+
+/* =====================================================
+   MATRIX WORD ENGINE
+   ===================================================== */
+
+const canvas =
+  document.getElementById("matrix");
+
+const ctx =
+  canvas.getContext("2d");
+
+let width;
+let height;
+
+function resizeMatrix(){
+
+  width =
+    canvas.width =
+    window.innerWidth;
+
+  height =
+    canvas.height =
+    window.innerHeight;
+}
+
+window.addEventListener(
+  "resize",
+  resizeMatrix
+);
+
+resizeMatrix();
+
 
 /*
-  PRECISION WATCH
+  Built-in dictionary-style vocabulary.
 
-  One HTML file.
-  No libraries.
-  No external JavaScript.
-
-  The watch:
-    1. Starts immediately from the device clock.
-    2. Attempts HTTPS time synchronization.
-    3. Estimates network round-trip delay.
-    4. Calculates a clock offset.
-    5. Keeps that offset between synchronizations.
-    6. Falls back gracefully when offline.
+  No external files.
+  No dependencies.
 */
 
-const markers = document.getElementById("markers");
+const words = [
 
-for(let i=0;i<60;i++){
+"ability","absence","academy","account","action",
+"active","address","advance","adventure","affair",
+"answer","apple","artist","aspect","balance",
+"battle","beauty","before","believe","between",
+"binary","border","branch","bridge","button",
+"camera","center","change","circle","cipher",
+"cloud","common","computer","control","corner",
+"create","current","cycle","data","decimal",
+"design","device","digital","domain","double",
+"dynamic","echo","element","energy","engine",
+"enter","event","example","factor","field",
+"figure","filter","future","garden","general",
+"global","group","growth","handle","history",
+"human","image","index","input","inside",
+"internet","kernel","key","language","layer",
+"level","light","logic","machine","matrix",
+"memory","method","model","module","motion",
+"network","number","object","online","option",
+"output","packet","pattern","phase","pixel",
+"point","power","process","program","project",
+"quantum","random","record","region","remote",
+"result","robot","route","screen","search",
+"server","signal","simple","source","space",
+"speed","state","stream","system","table",
+"target","thread","time","token","trace",
+"transform","vector","version","video","virtual",
+"window","world","write","zero"
 
-  const m=document.createElement("div");
+];
 
-  m.className =
-    "marker" + (i%5===0 ? " big" : "");
 
-  m.style.transform =
-    "translateX(-50%) rotate("+(i*6)+"deg)";
+const fontSize=14;
 
-  markers.appendChild(m);
+let columns =
+  Math.ceil(width/fontSize);
+
+let drops =
+  Array(columns).fill(0).map(
+    () => Math.random()*-50
+  );
+
+
+function resetMatrixColumns(){
+
+  columns =
+    Math.ceil(width/fontSize);
+
+  drops =
+    Array(columns).fill(0).map(
+      () => Math.random()*-50
+    );
 }
 
 
-/* ---------------------------------
-   CLOCK STATE
---------------------------------- */
+window.addEventListener(
+  "resize",
+  resetMatrixColumns
+);
 
-let clockOffset = 0;
-let syncAccuracy = null;
-let lastSync = 0;
+
+function matrixFrame(){
+
+  /*
+    Fade the previous frame.
+    This creates the long trailing effect.
+  */
+
+  ctx.fillStyle =
+    "rgba(0,0,0,0.075)";
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  ctx.font =
+    fontSize+"px monospace";
+
+
+  for(let i=0;i<columns;i++){
+
+    const word =
+      words[
+        Math.floor(
+          Math.random()*words.length
+        )
+      ];
+
+
+    const x =
+      i*fontSize;
+
+    const y =
+      drops[i]*fontSize;
+
+
+    /*
+      Draw individual letters
+      so the stream has a digital
+      cascading appearance.
+    */
+
+    for(let j=0;j<word.length;j++){
+
+      const yy =
+        y+j*fontSize;
+
+      if(
+        yy >= 0 &&
+        yy <= height
+      ){
+
+        /*
+          First character is brighter.
+        */
+
+        if(j===0){
+
+          ctx.fillStyle =
+            "rgba(180,255,180,.95)";
+
+        }else{
+
+          ctx.fillStyle =
+            "rgba(0,255,80,.65)";
+        }
+
+        ctx.fillText(
+          word[j],
+          x,
+          yy
+        );
+      }
+    }
+
+
+    /*
+      Randomly restart streams
+      after reaching the bottom.
+    */
+
+    if(
+      y > height &&
+      Math.random() > .975
+    ){
+
+      drops[i] =
+        Math.random()*-20;
+    }
+
+
+    drops[i] += .42;
+  }
+
+
+  requestAnimationFrame(
+    matrixFrame
+  );
+}
+
+
+matrixFrame();
+
+
+/* =====================================================
+   WATCH MARKERS
+   ===================================================== */
+
+const markers =
+  document.getElementById("markers");
+
+
+for(let i=0;i<60;i++){
+
+  const marker =
+    document.createElement("div");
+
+  marker.className =
+    "marker"+
+    (i%5===0 ? " big" : "");
+
+  marker.style.transform =
+    "translateX(-50%) rotate("+
+    (i*6)+
+    "deg)";
+
+  markers.appendChild(marker);
+}
+
+
+/* =====================================================
+   PRECISION CLOCK
+   ===================================================== */
+
+let clockOffset=0;
+
+let syncAccuracy=null;
 
 
 /*
-  Save synchronization data locally.
-  This lets the watch retain its best
-  known correction after closing/reopening.
+  Restore previous correction.
 */
 
 try{
 
   const saved =
-    JSON.parse(localStorage.getItem("precisionClock"));
+    JSON.parse(
+      localStorage.getItem(
+        "precisionClock"
+      )
+    );
 
-  if(saved && typeof saved.offset==="number"){
-    clockOffset=saved.offset;
+  if(
+    saved &&
+    typeof saved.offset==="number"
+  ){
+
+    clockOffset =
+      saved.offset;
   }
 
-}catch(e){}
+}catch(error){}
 
-
-/* ---------------------------------
-   TIME SOURCES
---------------------------------- */
 
 /*
-  These endpoints are only used for
-  obtaining a server timestamp through
-  an HTTP Date header.
+  Network time sources.
 
-  Browser CORS/security policies may
-  prevent access to some servers.
+  The browser may block some of these
+  because of CORS. The clock simply
+  tries the next source.
 */
 
-const timeSources = [
+const timeSources=[
 
   "https://www.google.com/generate_204",
 
@@ -396,13 +787,11 @@ const timeSources = [
 ];
 
 
-/* ---------------------------------
-   SYNC
---------------------------------- */
-
 async function getServerTime(url){
 
-  const start=performance.now();
+  const start =
+    performance.now();
+
 
   const response =
     await fetch(
@@ -414,160 +803,254 @@ async function getServerTime(url){
       }
     );
 
-  const end=performance.now();
+
+  const end =
+    performance.now();
+
 
   const dateHeader =
-    response.headers.get("Date");
+    response.headers.get(
+      "Date"
+    );
 
-  if(!dateHeader)
-    throw new Error("No Date header");
+
+  if(!dateHeader){
+
+    throw new Error(
+      "No server date"
+    );
+  }
+
 
   const serverTime =
-    Date.parse(dateHeader);
+    Date.parse(
+      dateHeader
+    );
 
-  if(!Number.isFinite(serverTime))
-    throw new Error("Bad server time");
 
-  const roundTrip=end-start;
+  if(
+    !Number.isFinite(
+      serverTime
+    )
+  ){
+
+    throw new Error(
+      "Invalid server time"
+    );
+  }
+
 
   /*
-    Approximate the server time at the
-    midpoint of the network trip.
+    Estimate the middle of the
+    request/response trip.
   */
 
-  const correctedServerTime =
-    serverTime + roundTrip/2;
+  const roundTrip =
+    end-start;
+
+
+  const serverAtMidpoint =
+    serverTime+
+    roundTrip/2;
+
 
   const localAtMidpoint =
-    Date.now() - roundTrip/2;
+    Date.now()-
+    roundTrip/2;
 
-  return {
+
+  return{
+
     offset:
-      correctedServerTime-localAtMidpoint,
+      serverAtMidpoint-
+      localAtMidpoint,
 
     accuracy:
       roundTrip/2
+
   };
 }
 
 
+/* =====================================================
+   SYNCHRONIZATION
+   ===================================================== */
+
 async function synchronize(){
 
-  const footer=
-    document.getElementById("footer");
+  const footer =
+    document.getElementById(
+      "footer"
+    );
 
-  const status=
-    document.getElementById("status");
+  const status =
+    document.getElementById(
+      "status"
+    );
 
-  footer.textContent=
+
+  footer.textContent =
     "SYNCHRONIZING…";
+
 
   let best=null;
 
-  for(const source of timeSources){
+
+  for(
+    const source of timeSources
+  ){
 
     try{
 
-      const result=
-        await getServerTime(source);
+      const result =
+        await getServerTime(
+          source
+        );
 
-      if(!best ||
-         result.accuracy < best.accuracy){
+
+      if(
+        !best ||
+        result.accuracy<
+        best.accuracy
+      ){
 
         best=result;
       }
 
-    }catch(e){
+
+    }catch(error){
 
       /*
-        Try next source.
+        Try the next source.
       */
 
     }
   }
 
+
   if(best){
 
-    clockOffset=best.offset;
-    syncAccuracy=best.accuracy;
-    lastSync=Date.now();
+    clockOffset =
+      best.offset;
+
+    syncAccuracy =
+      best.accuracy;
+
 
     try{
 
       localStorage.setItem(
         "precisionClock",
+
         JSON.stringify({
-          offset:clockOffset,
-          saved:Date.now()
+
+          offset:
+            clockOffset,
+
+          saved:
+            Date.now()
+
         })
       );
 
-    }catch(e){}
+    }catch(error){}
 
-    status.textContent=
+
+    status.textContent =
       "SYNCHRONIZED • ±"+
-      Math.round(syncAccuracy)+" ms";
+      Math.round(
+        syncAccuracy
+      )+
+      " ms";
 
-    footer.textContent=
+
+    footer.textContent =
       "PRECISION TIME • NETWORK SYNCHRONIZED";
+
 
   }else{
 
-    status.textContent=
+    status.textContent =
       "LOCAL CLOCK • SYNC UNAVAILABLE";
 
-    footer.textContent=
-      "OFFLINE • LAST KNOWN TIME CORRECTION RETAINED";
+
+    footer.textContent =
+      "OFFLINE • LAST KNOWN TIME RETAINED";
   }
 }
 
 
-/* ---------------------------------
-   DRAW WATCH
---------------------------------- */
+/* =====================================================
+   WATCH ANIMATION
+   ===================================================== */
 
-function draw(){
+function drawWatch(){
 
-  const now=
-    new Date(Date.now()+clockOffset);
+  const now =
+    new Date(
+      Date.now()+
+      clockOffset
+    );
 
-  const milliseconds=
+
+  const milliseconds =
     now.getMilliseconds();
 
-  const seconds=
+
+  const seconds =
     now.getSeconds()+
     milliseconds/1000;
 
-  const minutes=
+
+  const minutes =
     now.getMinutes()+
     seconds/60;
 
-  const hours=
+
+  const hours =
     (now.getHours()%12)+
     minutes/60;
 
-  document.getElementById("second")
-    .style.transform=
-      "rotate("+(seconds*6)+"deg)";
 
-  document.getElementById("minute")
-    .style.transform=
-      "rotate("+(minutes*6)+"deg)";
-
-  document.getElementById("hour")
-    .style.transform=
-      "rotate("+(hours*30)+"deg)";
+  document
+    .getElementById("second")
+    .style.transform =
+      "rotate("+
+      seconds*6+
+      "deg)";
 
 
-  document.getElementById("date")
-    .textContent=
-      String(now.getMonth()+1).padStart(2,"0")
-      +"/"+
-      String(now.getDate()).padStart(2,"0");
+  document
+    .getElementById("minute")
+    .style.transform =
+      "rotate("+
+      minutes*6+
+      "deg)";
 
 
-  document.getElementById("digital")
-    .textContent=
+  document
+    .getElementById("hour")
+    .style.transform =
+      "rotate("+
+      hours*30+
+      "deg)";
+
+
+  document
+    .getElementById("date")
+    .textContent =
+      String(
+        now.getMonth()+1
+      ).padStart(2,"0")+
+      "/"+
+      String(
+        now.getDate()
+      ).padStart(2,"0");
+
+
+  document
+    .getElementById("digital")
+    .textContent =
       now.toLocaleTimeString(
         "en-US",
         {
@@ -578,24 +1061,24 @@ function draw(){
       );
 
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(
+    drawWatch
+  );
 }
 
 
-/* ---------------------------------
+/* =====================================================
    START
---------------------------------- */
+   ===================================================== */
 
-draw();
-
-/*
-  Synchronize immediately and then
-  periodically. Ten minutes gives a
-  good balance between accuracy and
-  network requests.
-*/
+drawWatch();
 
 synchronize();
+
+
+/*
+  Re-sync every ten minutes.
+*/
 
 setInterval(
   synchronize,
@@ -604,15 +1087,15 @@ setInterval(
 
 
 /*
-  Re-sync when the page becomes visible
-  again after being backgrounded.
+  Re-sync when returning to the page.
 */
 
 document.addEventListener(
   "visibilitychange",
   ()=>{
-    if(!document.hidden)
+    if(!document.hidden){
       synchronize();
+    }
   }
 );
 
