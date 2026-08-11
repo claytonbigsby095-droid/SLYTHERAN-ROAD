@@ -1,1 +1,622 @@
-👋 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Precision Automatic</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 45%,#303030 0,#111 48%,#000 100%);
+  font-family:Georgia,"Times New Roman",serif;
+}
+
+.watch{
+  position:relative;
+  width:min(92vw,430px);
+  aspect-ratio:1;
+  padding:18px;
+  border-radius:50%;
+  background:
+    linear-gradient(145deg,
+      #ffffff 0%,
+      #aaa 12%,
+      #444 30%,
+      #111 50%,
+      #aaa 70%,
+      #eee 88%,
+      #555 100%);
+  box-shadow:
+    0 25px 60px #000,
+    inset 0 0 0 3px #ddd,
+    inset 0 0 0 7px #333;
+}
+
+.bezel{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  padding:7px;
+  background:
+    repeating-conic-gradient(
+      #aaa 0deg,
+      #eee 4deg,
+      #777 8deg,
+      #ccc 12deg
+    );
+}
+
+.face{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%,
+      #fff 0,
+      #f4f4ef 45%,
+      #ddd 75%,
+      #aaa 100%);
+  border:4px solid #111;
+  box-shadow:
+    inset 0 0 30px #777,
+    inset 0 0 5px #fff;
+}
+
+/* subtle dial texture */
+.face:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    repeating-radial-gradient(
+      circle,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,.025) 4px
+    );
+  pointer-events:none;
+}
+
+.brand{
+  position:absolute;
+  top:18%;
+  left:0;
+  width:100%;
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  letter-spacing:4px;
+  color:#111;
+}
+
+.model{
+  position:absolute;
+  top:27%;
+  left:0;
+  width:100%;
+  text-align:center;
+  font-size:8px;
+  letter-spacing:3px;
+  color:#222;
+}
+
+.crown{
+  position:absolute;
+  right:-11px;
+  top:46%;
+  width:17px;
+  height:31px;
+  border-radius:5px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #777 0 2px,
+      #ccc 2px 4px
+    );
+  box-shadow:0 1px 5px #000;
+}
+
+/* hour markers */
+.marker{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:4px;
+  height:45%;
+  transform-origin:50% 100%;
+  pointer-events:none;
+}
+
+.marker:after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-2px;
+  width:8px;
+  height:15px;
+  border-radius:2px;
+  background:linear-gradient(#111,#555);
+}
+
+.marker.big:after{
+  height:22px;
+  width:9px;
+  left:-2.5px;
+}
+
+/* hands */
+.hand{
+  position:absolute;
+  z-index:10;
+  left:50%;
+  top:50%;
+  transform-origin:50% 100%;
+  border-radius:5px 5px 2px 2px;
+}
+
+.hour{
+  width:8px;
+  height:25%;
+  margin-left:-4px;
+  margin-top:-25%;
+  background:linear-gradient(90deg,#111,#555,#111);
+  box-shadow:0 1px 2px #fff;
+}
+
+.minute{
+  width:5px;
+  height:36%;
+  margin-left:-2.5px;
+  margin-top:-36%;
+  background:linear-gradient(90deg,#111,#666,#111);
+}
+
+.second{
+  width:2px;
+  height:41%;
+  margin-left:-1px;
+  margin-top:-41%;
+  background:#9b0000;
+  border-radius:2px;
+}
+
+.second:after{
+  content:"";
+  position:absolute;
+  bottom:-18px;
+  left:-1px;
+  width:4px;
+  height:22px;
+  background:#9b0000;
+}
+
+/* center */
+.pin{
+  position:absolute;
+  z-index:20;
+  left:50%;
+  top:50%;
+  width:15px;
+  height:15px;
+  margin:-7.5px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,#eee 0 20%,#111 25% 65%,#aaa 70%);
+}
+
+/* date window */
+.date{
+  position:absolute;
+  z-index:8;
+  left:50%;
+  top:59%;
+  transform:translateX(-50%);
+  min-width:38px;
+  padding:3px 6px;
+  text-align:center;
+  background:#fff;
+  border:1px solid #777;
+  color:#111;
+  font:bold 12px Arial,sans-serif;
+  box-shadow:0 1px 3px #555;
+}
+
+/* bottom information */
+.info{
+  position:absolute;
+  left:0;
+  bottom:11%;
+  width:100%;
+  text-align:center;
+  color:#333;
+}
+
+.time{
+  font:11px Arial,sans-serif;
+  letter-spacing:1px;
+}
+
+.status{
+  margin-top:5px;
+  font:8px Arial,sans-serif;
+  letter-spacing:1px;
+  opacity:.75;
+}
+
+.footer{
+  position:fixed;
+  left:0;
+  bottom:8px;
+  width:100%;
+  text-align:center;
+  color:#aaa;
+  font:10px Arial,sans-serif;
+}
+</style>
+</head>
+
+<body>
+
+<div class="watch">
+
+  <div class="crown"></div>
+
+  <div class="bezel">
+
+    <div class="face">
+
+      <div class="brand">PRECISION</div>
+      <div class="model">AUTOMATIC • CHRONOMETER</div>
+
+      <div id="markers"></div>
+
+      <div class="hand hour" id="hour"></div>
+      <div class="hand minute" id="minute"></div>
+      <div class="hand second" id="second"></div>
+
+      <div class="pin"></div>
+
+      <div class="date" id="date">--</div>
+
+      <div class="info">
+        <div class="time" id="digital">--:--:--</div>
+        <div class="status" id="status">
+          LOCAL CLOCK
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer" id="footer">
+  Attempting precision time synchronization…
+</div>
+
+<script>
+"use strict";
+
+/*
+  PRECISION WATCH
+
+  One HTML file.
+  No libraries.
+  No external JavaScript.
+
+  The watch:
+    1. Starts immediately from the device clock.
+    2. Attempts HTTPS time synchronization.
+    3. Estimates network round-trip delay.
+    4. Calculates a clock offset.
+    5. Keeps that offset between synchronizations.
+    6. Falls back gracefully when offline.
+*/
+
+const markers = document.getElementById("markers");
+
+for(let i=0;i<60;i++){
+
+  const m=document.createElement("div");
+
+  m.className =
+    "marker" + (i%5===0 ? " big" : "");
+
+  m.style.transform =
+    "translateX(-50%) rotate("+(i*6)+"deg)";
+
+  markers.appendChild(m);
+}
+
+
+/* ---------------------------------
+   CLOCK STATE
+--------------------------------- */
+
+let clockOffset = 0;
+let syncAccuracy = null;
+let lastSync = 0;
+
+
+/*
+  Save synchronization data locally.
+  This lets the watch retain its best
+  known correction after closing/reopening.
+*/
+
+try{
+
+  const saved =
+    JSON.parse(localStorage.getItem("precisionClock"));
+
+  if(saved && typeof saved.offset==="number"){
+    clockOffset=saved.offset;
+  }
+
+}catch(e){}
+
+
+/* ---------------------------------
+   TIME SOURCES
+--------------------------------- */
+
+/*
+  These endpoints are only used for
+  obtaining a server timestamp through
+  an HTTP Date header.
+
+  Browser CORS/security policies may
+  prevent access to some servers.
+*/
+
+const timeSources = [
+
+  "https://www.google.com/generate_204",
+
+  "https://www.cloudflare.com/cdn-cgi/trace",
+
+  "https://time.cloudflare.com/"
+
+];
+
+
+/* ---------------------------------
+   SYNC
+--------------------------------- */
+
+async function getServerTime(url){
+
+  const start=performance.now();
+
+  const response =
+    await fetch(
+      url,
+      {
+        method:"HEAD",
+        cache:"no-store",
+        mode:"cors"
+      }
+    );
+
+  const end=performance.now();
+
+  const dateHeader =
+    response.headers.get("Date");
+
+  if(!dateHeader)
+    throw new Error("No Date header");
+
+  const serverTime =
+    Date.parse(dateHeader);
+
+  if(!Number.isFinite(serverTime))
+    throw new Error("Bad server time");
+
+  const roundTrip=end-start;
+
+  /*
+    Approximate the server time at the
+    midpoint of the network trip.
+  */
+
+  const correctedServerTime =
+    serverTime + roundTrip/2;
+
+  const localAtMidpoint =
+    Date.now() - roundTrip/2;
+
+  return {
+    offset:
+      correctedServerTime-localAtMidpoint,
+
+    accuracy:
+      roundTrip/2
+  };
+}
+
+
+async function synchronize(){
+
+  const footer=
+    document.getElementById("footer");
+
+  const status=
+    document.getElementById("status");
+
+  footer.textContent=
+    "SYNCHRONIZING…";
+
+  let best=null;
+
+  for(const source of timeSources){
+
+    try{
+
+      const result=
+        await getServerTime(source);
+
+      if(!best ||
+         result.accuracy < best.accuracy){
+
+        best=result;
+      }
+
+    }catch(e){
+
+      /*
+        Try next source.
+      */
+
+    }
+  }
+
+  if(best){
+
+    clockOffset=best.offset;
+    syncAccuracy=best.accuracy;
+    lastSync=Date.now();
+
+    try{
+
+      localStorage.setItem(
+        "precisionClock",
+        JSON.stringify({
+          offset:clockOffset,
+          saved:Date.now()
+        })
+      );
+
+    }catch(e){}
+
+    status.textContent=
+      "SYNCHRONIZED • ±"+
+      Math.round(syncAccuracy)+" ms";
+
+    footer.textContent=
+      "PRECISION TIME • NETWORK SYNCHRONIZED";
+
+  }else{
+
+    status.textContent=
+      "LOCAL CLOCK • SYNC UNAVAILABLE";
+
+    footer.textContent=
+      "OFFLINE • LAST KNOWN TIME CORRECTION RETAINED";
+  }
+}
+
+
+/* ---------------------------------
+   DRAW WATCH
+--------------------------------- */
+
+function draw(){
+
+  const now=
+    new Date(Date.now()+clockOffset);
+
+  const milliseconds=
+    now.getMilliseconds();
+
+  const seconds=
+    now.getSeconds()+
+    milliseconds/1000;
+
+  const minutes=
+    now.getMinutes()+
+    seconds/60;
+
+  const hours=
+    (now.getHours()%12)+
+    minutes/60;
+
+  document.getElementById("second")
+    .style.transform=
+      "rotate("+(seconds*6)+"deg)";
+
+  document.getElementById("minute")
+    .style.transform=
+      "rotate("+(minutes*6)+"deg)";
+
+  document.getElementById("hour")
+    .style.transform=
+      "rotate("+(hours*30)+"deg)";
+
+
+  document.getElementById("date")
+    .textContent=
+      String(now.getMonth()+1).padStart(2,"0")
+      +"/"+
+      String(now.getDate()).padStart(2,"0");
+
+
+  document.getElementById("digital")
+    .textContent=
+      now.toLocaleTimeString(
+        "en-US",
+        {
+          hour:"numeric",
+          minute:"2-digit",
+          second:"2-digit"
+        }
+      );
+
+
+  requestAnimationFrame(draw);
+}
+
+
+/* ---------------------------------
+   START
+--------------------------------- */
+
+draw();
+
+/*
+  Synchronize immediately and then
+  periodically. Ten minutes gives a
+  good balance between accuracy and
+  network requests.
+*/
+
+synchronize();
+
+setInterval(
+  synchronize,
+  10*60*1000
+);
+
+
+/*
+  Re-sync when the page becomes visible
+  again after being backgrounded.
+*/
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+    if(!document.hidden)
+      synchronize();
+  }
+);
+
+</script>
+
+</body>
+</html>
